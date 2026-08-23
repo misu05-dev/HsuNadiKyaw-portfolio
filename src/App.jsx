@@ -22,8 +22,11 @@ import OISLogo from "./images/logo.png";
 import MovieLogo from "./images/movie.png";
 import WeatherLogo from "./images/weather.png";
 import AALSLogo from "./images/logo.jpg";
+import { HiOutlineBriefcase } from "react-icons/hi";
+import { FaGooglePlay, FaApple, FaGlobe } from "react-icons/fa";
 // import Resume from "/HsuNadiKyawResume.pdf";
-// import ME from "./images/ME.jpg";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import laptopLottie from "./animations/Laptop.lottie?url";
 
 function Container({ children }) {
   return (
@@ -114,7 +117,7 @@ function Intro() {
         </p>
         <div className="flex justify-center gap-6 mt-8">
           <a
-            href="https://drive.google.com/file/d/1ryDIwfcWynwuljRlytfGGNRRH4CO7NQc/view"
+            href="https://drive.google.com/file/d/1y1mvJQGR1wR9A1HcwMv3GtF5WANiFeA-/view"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -157,8 +160,12 @@ function About() {
         </div>
 
         <div className="flex justify-center">
-          {/* <img src={ME} className="w-56 h-56 rounded-3xl animate-pulse"/> */}
-          <div className="w-56 h-56 bg-purple-600/30 rounded-3xl blur-xl animate-pulse"></div>
+          <DotLottieReact
+            src={laptopLottie}
+            loop
+            autoplay
+            className="w-72 h-72"
+          />
         </div>
 
       </div>
@@ -166,83 +173,179 @@ function About() {
   );
 }
 
-function Experience() {
-  const job = {
-    year: "2025",
-    duration: "1st July — Present",
-    title: "Web Developer",
-    company: "Ophir It Solutions",
-    // desc: "Architected responsive landing pages and high-performance dashboard interfaces using React and Tailwind CSS. Focused on optimizing user flow",
+// Expanded data structure with multiple roles and richer detail
+const experiences = [
+  {
+    year: "2024 — Present",
+    duration: "2024 — August",
+    title: "Full-Stack Web Developer",
+    company: "Ophir IT Solutions",
+    type: "Full-time",
+    location: "On-site / Hybrid",
+    desc: "Architecting high-performance landing pages, dynamic dashboards, and full-stack web applications. Driving frontend performance optimization, API integration, and user-centric interface design.",
     points: [
-      "Build responsive and interactive websites using React, Vue.js, PHP, and Laravel",
-      "Intergrate REST APIs and handled data binding between backend and frontend for dynamic content",
-      "Developed dashboards, admin panels , and feature-rich web systems",
-      "Worked on both forntend UI and backend development logic",
+      "Engineered scalable web applications using React, Vue.js, PHP, and Laravel, improving overall load efficiency and code maintainability.",
+      "Designed and integrated robust RESTful APIs to ensure seamless frontend-backend data binding and dynamic state management.",
+      "Developed complex, data-driven dashboards and admin management panels with real-time analytics and dynamic reporting views.",
+      "Collaborated closely with cross-functional teams to translate UI/UX wireframes into responsive, pixel-perfect digital experiences.",
+      "Implemented security best practices, form validation, and optimized client-side rendering for improved SEO and UX scores.",
     ],
-    skills: ["React", "Tailwind", "Vite"],
-  };
+    skills: ["React", "Vue.js", "Laravel", "PHP", "Tailwind CSS", "REST APIs", "Vite", "MySQL"],
+  },
+];
 
+export function Experience() {
   return (
     <Section id="experience" title="Experience">
-      <div className="max-w-5xl mx-auto px-4">
-        <div className="flex flex-col md:flex-row gap-8 md:gap-16">
-          <div className="md:w-1/3">
-            <div className="sticky top-24">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="h-[2px] w-8 bg-purple-500"></span>
-                <span className="text-purple-500 font-mono font-bold tracking-tighter text-xl">
-                  {job.year}
-                </span>
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          {/* Left Column: Section Header */}
+          <div className="lg:col-span-4">
+            <div className="lg:sticky lg:top-28 space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-xs font-mono font-semibold tracking-wider uppercase">
+                <HiOutlineBriefcase className="w-4 h-4" /> Career Path
               </div>
-              <h2 className="text-stone-200 text-4xl md:text-5xl font-black mb-4">
-                THE <br /> JOURNEY
+
+              <h2 className="text-stone-100 text-4xl lg:text-5xl font-black tracking-tight leading-none">
+                THE <br />
+                <span
+                  className="bg-gradient-to-r from-purple-400 via-pink-500 via-indigo-400 to-purple-400 bg-[length:200%_auto] bg-clip-text text-transparent"
+                  style={{
+                    animation: "moveGradient 4s linear infinite",
+                  }}
+                >
+                  JOURNEY
+                </span>
+                <style>{`
+    @keyframes moveGradient {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+  `}</style>
               </h2>
-              <p className="text-stone-500 font-medium italic">{job.duration}</p>
+
+              <p className="text-stone-400 text-sm leading-relaxed max-w-sm">
+                A timeline of my professional roles, technical contributions, and the impact delivered across client and internal projects.
+              </p>
             </div>
           </div>
 
-          <div className="md:w-2/3">
-            <div className="relative p-1 bg-gradient-to-b from-white/10 to-transparent rounded-2xl">
-              <div className="bg-[#050505] rounded-xl p-8 md:p-10 border border-white/5">
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="p-3 rounded-lg text-purple-400 w-20 h-20 flex items-center justify-center">
-                    <img
-                      src={OISLogo}
-                      alt="Ophir IT Solutions Logo"
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-stone-200 leading-tight">
-                      {job.title}
-                    </h3>
-                    <p className="text-purple-400 font-medium">{job.company}</p>
-                  </div>
-                </div>
+          {/* Right Column: Experience Cards */}
+          <div className="lg:col-span-8 space-y-8">
+            {experiences.map((job, index) => (
+              <div
+                key={index}
+                className="group relative p-px rounded-2xl bg-gradient-to-b from-purple-500/20 via-white/5 to-transparent transition-all duration-300 hover:from-purple-500/40"
+              >
+                <div className="bg-[#080808] rounded-2xl p-6 sm:p-8 md:p-10 border border-white/5 h-full transition-transform duration-300 group-hover:-translate-y-1">
 
-                <p className="text-stone-400 leading-relaxed mb-8 text-lg">
-                  {job.desc}
-                </p>
+                  {/* Top Metadata Bar */}
+                  <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-6 border-b border-white/5">
+                    <div className="flex items-center gap-4">
+                      {/* Logo Container */}
+                      <div className="p-2.5 rounded-xl bg-stone-900 border border-white/10 w-14 h-14 flex items-center justify-center shrink-0">
+                        {/* Replace with your logo variable or standard img */}
+                        <img
+                          src={OISLogo}
+                          alt={`${job.company} Logo`}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
 
-                <div className="space-y-4 mb-8">
-                  {job.points.map((point, i) => (
-                    <div key={i} className="flex items-start gap-3 group">
-                      <FaChevronRight
-                        className="mt-1.5 text-purple-600 group-hover:translate-x-1 transition-transform"
-                        size={12}
-                      />
-                      <span className="text-stone-300 group-hover:text-stone-200 transition-colors">
-                        {point}
+                      <div>
+                        <h3 className="text-xl sm:text-2xl font-bold text-stone-100 group-hover:text-purple-300 transition-colors">
+                          {job.title}
+                        </h3>
+                        <p className="text-purple-400 font-medium text-sm sm:text-base">
+                          {job.company}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Date Tag */}
+                    <div className="flex flex-col items-start sm:items-end">
+                      <span className="text-xs font-mono font-semibold text-purple-300 bg-purple-500/10 px-2.5 py-1 rounded-md border border-purple-500/20">
+                        {job.duration}
+                      </span>
+                      <span className="text-xs text-stone-500 font-medium mt-1">
+                        {job.location} • {job.type}
                       </span>
                     </div>
-                  ))}
+                  </div>
+
+                  {/* Summary Description */}
+                  <p className="text-stone-300 text-base leading-relaxed mb-6 font-normal">
+                    {job.desc}
+                  </p>
+
+                  {/* Key Achievements / Bullet Points */}
+                  <div className="space-y-3 mb-8">
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-2">
+                      Key Responsibilities & Achievements
+                    </p>
+                    {job.points.map((point, i) => (
+                      <div key={i} className="flex items-start gap-3 group/item">
+                        <FaChevronRight className="mt-1 text-purple-500 shrink-0 group-hover/item:translate-x-1 transition-transform" size={11} />
+                        <span className="text-stone-300 text-sm sm:text-base leading-snug group-hover/item:text-stone-100 transition-colors">
+                          {point}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Tech Stack Pills */}
+                  <div className="pt-4 border-t border-white/5">
+                    <p className="text-xs font-semibold text-stone-400 uppercase tracking-wider mb-3">
+                      Technologies Used
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {job.skills.map((skill, i) => (
+                        <span
+                          key={i}
+                          className="text-xs font-mono text-stone-300 bg-stone-900 border border-white/10 px-3 py-1 rounded-lg hover:border-purple-500/50 hover:text-purple-300 transition-colors"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
                 </div>
               </div>
-            </div>
+            ))}
           </div>
+
         </div>
       </div>
     </Section>
+  );
+}
+
+// Map tag name -> icon. Add to this as your stack grows.
+const tagIconMap = {
+  Laravel: <FaLaravel size={12} className="text-red-500" />,
+  "Vue.js": <FaVuejs size={12} className="text-green-500" />,
+  "React.js": <FaReact size={12} className="text-cyan-400" />,
+  Bootstrap: <FaBootstrap size={12} className="text-purple-500" />,
+  Mysql: <SiMysql size={12} className="text-blue-400" />,
+  MySQL: <SiMysql size={12} className="text-blue-400" />,
+  Tailwind: <SiTailwindcss size={12} className="text-sky-400" />,
+  PHP: <FaPhp size={12} className="text-indigo-400" />,
+  HTML: <FaHtml5 size={12} className="text-orange-500" />,
+  CSS: <FaCss3Alt size={12} className="text-blue-500" />,
+  JavaScript: <FaJs size={12} className="text-yellow-400" />,
+};
+
+function TagBadge({ tag }) {
+  const icon = tagIconMap[tag];
+  return (
+    <span
+      title={tag}
+      className="flex items-center justify-center w-6 h-6 bg-white/[0.03] border border-white/[0.06] rounded text-stone-400"
+    >
+      {icon ? icon : <span className="text-[9px] font-mono">{tag.slice(0, 2)}</span>}
+    </span>
   );
 }
 
@@ -252,80 +355,81 @@ function Projects() {
     {
       title: "Love Car",
       image: LoveCarLogo,
-      accent: "from-purple-500/20 to-violet-600/20",
       description:
         "Streamlined the vehicle browsing experience by building a custom REST API and database. Focused on high-performance UI rendering using Vue.js and ensuring cross-device compatibility with Bootstrap.",
-      tags: ["Laravel", "Vue.js", "Inertia.js", "Bootstrap", "Mysql"],
-      live: "https://play.google.com/store/search?q=lovecar&c=apps&hl=en",
+      tags: ["Laravel", "Vue.js", "Bootstrap", "Mysql"],
+      type: "mobile",
+      playStore: "https://play.google.com/store/search?q=lovecar&c=apps&hl=en",
+      appStore: "https://apps.apple.com/us/iphone/search?term=lovecar",
       github: "#",
     },
     {
       title: "Car Business Management System",
       image: LoveCarLogo,
-      accent: "from-purple-500/20 to-violet-600/20",
       description:
         "Streamlined the vehicle browsing experience by building a custom REST API and database. Focused on high-performance UI rendering using Vue.js and ensuring cross-device compatibility with Bootstrap.",
-      tags: ["Laravel", "Vue.js", "Inertia.js", "Bootstrap", "Mysql"],
+      tags: ["Laravel", "Vue.js", "Bootstrap", "Mysql"],
+      type: "mobile",
       live: "https://play.google.com/store/search?q=lovecar&c=apps&hl=en",
       github: "#",
     },
     {
       title: "Zo Genealogy",
       image: ZoGenLogo,
-      accent: "from-blue-500/20 to-cyan-600/20",
       description:
         "A cultural heritage platform for the Chin people, enabling users to create and search generational family chains. Developed the full-stack flow including dashboard API endpoints, search logic, and a responsive React-based interface.",
-      tags: ["Laravel", "React.js", "Inertia.js", "Tailwind", "Mysql"],
+      tags: ["Laravel", "React.js", "Tailwind", "Mysql"],
+      type: "web",
       live: "https://zogenealogy.org/",
       github: "#",
     },
     {
       title: "AALS",
       image: AALSLogo,
-      accent: "from-blue-500/20 to-cyan-600/20",
       description:
         "A professional service platform featuring a detailed UI designed to showcase comprehensive janitorial solutions. Focused on creating a structured, multi-component layout that enhances brand trust and user engagement.",
-      tags: ["React.js", "Tailwind", "Component Architecture"],
+      tags: ["React.js", "Tailwind"],
+      type: "web",
       live: "https://aals.aungacademylanguageschool.com/",
       github: "#",
     },
     {
       title: "Call2Clean",
       image: C2CLogo,
-      accent: "from-blue-500/20 to-cyan-600/20",
       description:
         "A professional service platform featuring a detailed UI designed to showcase comprehensive janitorial solutions. Focused on creating a structured, multi-component layout that enhances brand trust and user engagement.",
-      tags: ["React.js", "Tailwind", "Component Architecture"],
+      tags: ["React.js", "Tailwind"],
+      type: "web",
       live: "https://www.call2cleanservices.com/",
       github: "#",
     },
     {
       title: "Ophir IT Solutions",
       image: OISLogo,
-      accent: "from-blue-500/20 to-cyan-600/20",
       description:
         "The official digital profile for an IT solutions firm. Built with a clean and modern aesthetic, focusing on a high-performance minimalist UI to present corporate information and service offerings clearly.",
-      tags: ["React.js", "Tailwind", "Minimalist Design"],
+      tags: ["React.js", "Tailwind"],
+      type: "web",
       live: "https://ophir-itsolutions.com/",
       github: "#",
     },
     {
       title: "Weather App",
       image: WeatherLogo,
-      accent: "from-blue-500/20 to-cyan-600/20",
       description:
         "The official digital profile for an IT solutions firm. Built with a clean and modern aesthetic, focusing on a high-performance minimalist UI to present corporate information and service offerings clearly.",
-      tags: ["React.js", "Tailwind", "Minimalist Design"],
+      tags: ["React.js", "Tailwind"],
+      type: "web",
       live: "https://weatherforecastcountry.netlify.app/",
       github: "https://github.com/misu05-dev/weather",
     },
     {
       title: "MoviesSeed",
       image: MovieLogo,
-      accent: "from-blue-500/20 to-cyan-600/20",
       description:
         "The official digital profile for an IT solutions firm. Built with a clean and modern aesthetic, focusing on a high-performance minimalist UI to present corporate information and service offerings clearly.",
-      tags: ["React.js", "Tailwind", "Minimalist Design"],
+      tags: ["React.js", "Tailwind"],
+      type: "web",
       live: "https://moviesseed.netlify.app/",
       github: "https://github.com/misu05-dev/movieseed",
     },
@@ -346,7 +450,7 @@ function Projects() {
           {visibleProjects.map((project, index) => (
             <div
               key={index}
-              className="group relative bg-[#09090b] border border-white/[0.06] rounded-xl p-6 transition-all duration-300 hover:border-white/[0.12] hover:bg-[#0e0e11]"
+              className="group relative bg-[#09090b] border border-white/[0.06] rounded-xl p-6 transition-all duration-300 hover:border-white/[0.12] hover:bg-[#0e0e11] hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10"
             >
               <div className="flex flex-col h-full justify-between">
                 <div>
@@ -356,12 +460,7 @@ function Projects() {
                     </div>
                     <div className="flex flex-wrap justify-end gap-1.5">
                       {project.tags.map((tag, i) => (
-                        <span
-                          key={i}
-                          className="px-2 py-0.5 text-[10px] bg-white/[0.03] border border-white/[0.06] rounded text-stone-400 font-mono"
-                        >
-                          {tag}
-                        </span>
+                        <TagBadge key={i} tag={tag} />
                       ))}
                     </div>
                   </div>
@@ -375,7 +474,7 @@ function Projects() {
                 </div>
 
                 <div className="flex items-center justify-between border-t border-white/[0.05] pt-4 mt-auto">
-                  {project.github && project.github !== "#" ? (
+                  {/* {project.github && project.github !== "#" && (
                     <a
                       href={project.github}
                       target="_blank"
@@ -384,21 +483,46 @@ function Projects() {
                     >
                       <FaGithub size={14} /> GitHub
                     </a>
+                  )} */}
+
+                  {project.type === "mobile" ? (
+                    <div className="flex items-center gap-3 ml-auto">
+                      {project.playStore && (
+                        <a
+                          href={project.playStore}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Get it on Google Play"
+                          className="text-stone-400 hover:text-purple-400 transition-colors"
+                        >
+                          <FaGooglePlay size={16} />
+                        </a>
+                      )}
+                      {project.appStore ? (
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Get it on the App Store"
+                          className="text-stone-400 hover:text-purple-400 transition-colors"
+                        >
+                          <FaApple size={17} />
+                        </a>
+                      ) : (
+                        <span title="Not on the App Store" className="text-stone-700">
+                          <FaApple size={17} />
+                        </span>
+                      )}
+                    </div>
                   ) : (
-                    <span className="text-[11px] text-stone-600 italic">
-                      Private Repo
-                    </span>
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1.5 text-[11px] font-bold text-purple-400 hover:text-purple-200 transition-colors group/link ml-auto"
+                    >
+                      <FaGlobe size={13} />
+                    </a>
                   )}
-                  <a
-                    href={project.live}
-                    className="flex items-center gap-1 text-[11px] font-bold text-purple-400 hover:text-purple-200 transition-colors group/link"
-                  >
-                    Deploy{" "}
-                    <FaArrowRight
-                      size={11}
-                      className="transition-transform group-hover/link:translate-x-1"
-                    />
-                  </a>
                 </div>
               </div>
             </div>
