@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   FaHtml5,
   FaCss3Alt,
@@ -11,9 +11,11 @@ import {
   FaChevronRight,
   FaArrowRight,
   FaGithub,
+  FaFigma,
+  FaEnvelope, FaPaperPlane, FaSpinner, FaCheckCircle, FaExclamationCircle, FaGooglePlay, FaApple, FaGlobe, FaAppStoreIos
 } from "react-icons/fa";
 import { FaBluesky, FaXTwitter } from "react-icons/fa6";
-import { SiTailwindcss, SiMysql } from "react-icons/si";
+import { SiTailwindcss, SiMysql, SiPostgresql, SiPostman, SiBruno } from "react-icons/si";
 import { TbBrandAdobeIllustrator } from "react-icons/tb";
 import LoveCarLogo from "./images/lovecar.webp";
 import ZoGenLogo from "./images/zogenealogy.png";
@@ -22,11 +24,10 @@ import OISLogo from "./images/logo.png";
 import MovieLogo from "./images/movie.png";
 import WeatherLogo from "./images/weather.png";
 import AALSLogo from "./images/logo.jpg";
-import { HiOutlineBriefcase } from "react-icons/hi";
-import { FaGooglePlay, FaApple, FaGlobe } from "react-icons/fa";
-// import Resume from "/HsuNadiKyawResume.pdf";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import laptopLottie from "./animations/Laptop.lottie?url";
+import { HiOutlineBriefcase } from "react-icons/hi"
+import Lottie from "lottie-react";
+import girlSitting from "./animations/girl-sitting.json";
+import ParticleText from "./animations/ParticleText";
 
 function Container({ children }) {
   return (
@@ -37,7 +38,7 @@ function Container({ children }) {
 }
 
 function Navbar() {
-  const links = ["About", "Experience", "Projects", "Skills", "Contact"];
+  const links = ["About", "Skills", "Experience", "Projects", "Contact"];
   const [active, setActive] = useState("");
 
   useEffect(() => {
@@ -105,19 +106,74 @@ function Section({ id, title, children }) {
 }
 
 function Intro() {
+  const aboutRef = useRef(null);
+  const [showSpotlight, setShowSpotlight] = useState(false);
+
+  useEffect(() => {
+    const section = aboutRef.current;
+
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Reset animation
+          setShowSpotlight(false);
+
+          // Start animation again
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              setShowSpotlight(true);
+            });
+          });
+        } else {
+          // Reset when leaving the section
+          setShowSpotlight(false);
+        }
+      },
+      {
+        threshold: 0.2,
+      }
+    );
+
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section id="about" className="pt-60 pb-32 text-center text-stone-300">
+    <section
+      ref={aboutRef}
+      id="about"
+      className="relative pt-60 pb-32 text-center text-stone-300 overflow-hidden"
+    >
+      {/* Spotlight */}
+      {/* <div
+        className={`pointer-events-none absolute -top-40 left-3/5 -translate-x-1/2 w-[500px] h-[500px] spotlight-beam ${
+          showSpotlight ? "show" : ""
+        }`}
+      /> */}
+
       <Container>
-        <h1 className="text-5xl sm:text-6xl font-bold text-stone-200 mt-6">
-          Hey! , I am <span className="text-purple-500" >Hsu Nadi Kyaw</span>
+        <h1 className="relative z-10 text-5xl sm:text-6xl font-bold text-stone-200 mt-6 flex flex-wrap items-center justify-center gap-2">
+          Hey! I am
+
+          <ParticleText
+            text="Hsu Nadi Kyaw"
+            particleColor="#c084fc"
+            fontSize={60}
+            className=""
+          />
         </h1>
-        <p className="max-w-xl mx-auto text-stone-400 mt-6">
+
+        <p className="relative z-10 max-w-xl mx-auto text-stone-400 mt-6">
           I craft modern, responsive web applications and beautiful digital
           experiences using modern technologies.
         </p>
-        <div className="flex justify-center gap-6 mt-8">
+
+        <div className="relative z-10 flex justify-center gap-6 mt-8">
           <a
-            href="https://drive.google.com/file/d/1y1mvJQGR1wR9A1HcwMv3GtF5WANiFeA-/view"
+            href="https://drive.google.com/file/d/1yopEApiRzSqQEqFvD0WZc3cmWHzuyIm5/view"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -125,11 +181,12 @@ function Intro() {
               Resume
             </button>
           </a>
+
           <button
             onClick={() => {
               document
                 .getElementById("contact")
-                .scrollIntoView({ behavior: "smooth" });
+                ?.scrollIntoView({ behavior: "smooth" });
             }}
             className="px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-600 hover:text-stone-200 transition"
           >
@@ -141,33 +198,132 @@ function Intro() {
   );
 }
 
+function useInView(threshold = 0.3) {
+  const ref = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => setInView(true));
+          });
+        } else {
+          setInView(false);
+        }
+      },
+      { threshold, rootMargin: "0px 0px -80px 0px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, inView];
+}
+
+function Reveal({ children, delay = 0 }) {
+  const [ref, inView] = useInView();
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ease-out ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        }`}
+    >
+      {children}
+    </div>
+  );
+}
+
 function About() {
   return (
-    <Section title="About Me">
-      <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div className="space-y-4 text-stone-400">
-          <p>
-            I'm a junior full-stack web developer passionate about building modern and responsive web applications. I work with React.js, Vue.js, PHP, Laravel to develop both frontend inerfaces and backend systems.
-          </p>
+    <Section id="about">
+      {/* Section Heading */}
+      <div className="flex flex-col items-center mb-10">
+        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+          About Me
+        </h2>
+        {/* <div className="mt-4 w-12 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" /> */}
+      </div>
 
-          <p>
-            I enjoy creating clean, user-friendly, and efficient websites while continuously improving my skills through real-world project. My focus is on building fast, scalable, and well-structured web applications following modern development practices.
-          </p>
+      <div className="relative max-w-5xl mx-auto">
+        {/* Background Glow */}
+        <div className="pointer-events-none absolute -top-20 left-1/4 w-70 h-72 rounded-full bg-purple-500/10 blur-[100px]" />
+        <div className="pointer-events-none absolute bottom-0 right-1/4 w-72 h-72 rounded-full bg-pink-500/10 blur-[100px]" />
 
-          {/* <p>
-            As a developer, I like solving problems and building complete web soultions from frontend to backend while growing my experience in the tech industry.
-          </p> */}
+        <div className="relative grid lg:grid-cols-2 gap-8 items-center">
+
+          {/* LEFT — Visual */}
+          <Reveal delay={150}>
+            <div className="relative">
+              <div className="relative rounded-3xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-xl p-6 sm:p-8 overflow-hidden">
+
+                <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-purple-500/[0.08] to-transparent pointer-events-none" />
+
+                {/* Decorative circles */}
+                <div className="absolute top-6 left-6 w-2 h-2 rounded-full bg-purple-400 shadow-[0_0_12px_rgba(168,85,247,0.8)]" />
+                <div className="absolute top-6 left-10 w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_12px_rgba(236,72,153,0.7)]" />
+
+                {/* Smaller Lottie */}
+                <div className="flex justify-center items-center min-h-[280px] sm:min-h-[340px]">
+                  <Lottie
+                    animationData={girlSitting}
+                    loop
+                    autoplay
+                    className="w-[260px] sm:w-[320px] md:w-[360px]"
+                  />
+                </div>
+
+                {/* Bottom label */}
+                <div className="absolute bottom-5 left-5 right-5">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-stone-500">
+                    Full-Stack Developer
+                  </span>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+
+          {/* RIGHT — Content */}
+          <div className="space-y-7">
+
+            <Reveal delay={300}>
+              <div>
+                <h3 className="text-xl sm:text-2xl font-bold text-stone-100 leading-tight">
+                  Full-stack developer focused on building
+                  <span className="text-purple-400">
+                    {" "}modern and reliable web applications.
+                  </span>
+                </h3>
+              </div>
+            </Reveal>
+
+            <Reveal delay={400}>
+              <div className="space-y-4 text-stone-400 text-sm sm:text-base leading-relaxed">
+                <p>
+                  I’m a full-stack web developer with a strong focus on
+                  building responsive interfaces, robust backend systems, and
+                  seamless user experiences. I enjoy working across the
+                  application stack, from designing intuitive interfaces to
+                  developing reliable server-side functionality.
+                </p>
+
+                <p>
+                  I approach each project with an emphasis on clean
+                  architecture, maintainable code, and practical solutions.
+                  I’m continuously improving my skills and exploring better
+                  ways to build scalable, efficient, and user-focused
+                  applications.
+                </p>
+              </div>
+            </Reveal>
+          </div>
         </div>
-
-        <div className="flex justify-center">
-          <DotLottieReact
-            src={laptopLottie}
-            loop
-            autoplay
-            className="w-72 h-72"
-          />
-        </div>
-
       </div>
     </Section>
   );
@@ -196,7 +352,12 @@ const experiences = [
 
 export function Experience() {
   return (
-    <Section id="experience" title="Experience">
+    <Section id="experience">
+      <div className="flex flex-col items-center mb-10">
+        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+          Experience
+        </h2>
+      </div>
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
 
@@ -324,17 +485,16 @@ export function Experience() {
 
 // Map tag name -> icon. Add to this as your stack grows.
 const tagIconMap = {
-  Laravel: <FaLaravel size={12} className="text-red-500" />,
-  "Vue.js": <FaVuejs size={12} className="text-green-500" />,
-  "React.js": <FaReact size={12} className="text-cyan-400" />,
-  Bootstrap: <FaBootstrap size={12} className="text-purple-500" />,
-  Mysql: <SiMysql size={12} className="text-blue-400" />,
-  MySQL: <SiMysql size={12} className="text-blue-400" />,
-  Tailwind: <SiTailwindcss size={12} className="text-sky-400" />,
-  PHP: <FaPhp size={12} className="text-indigo-400" />,
-  HTML: <FaHtml5 size={12} className="text-orange-500" />,
-  CSS: <FaCss3Alt size={12} className="text-blue-500" />,
-  JavaScript: <FaJs size={12} className="text-yellow-400" />,
+  Laravel: <FaLaravel size={18} className="text-red-500" />,
+  "Vue.js": <FaVuejs size={18} className="text-green-500" />,
+  "React.js": <FaReact size={18} className="text-cyan-400" />,
+  Bootstrap: <FaBootstrap size={18} className="text-purple-500" />,
+  Mysql: <SiMysql size={18} className="text-blue-400" />,
+  Tailwind: <SiTailwindcss size={18} className="text-sky-400" />,
+  PHP: <FaPhp size={18} className="text-indigo-400" />,
+  HTML: <FaHtml5 size={18} className="text-orange-500" />,
+  CSS: <FaCss3Alt size={18} className="text-blue-500" />,
+  JavaScript: <FaJs size={18} className="text-yellow-400" />,
 };
 
 function TagBadge({ tag }) {
@@ -342,7 +502,7 @@ function TagBadge({ tag }) {
   return (
     <span
       title={tag}
-      className="flex items-center justify-center w-6 h-6 bg-white/[0.03] border border-white/[0.06] rounded text-stone-400"
+      className="flex items-center justify-center w-8 h-8 bg-white/[0.03] border border-white/[0.06] rounded text-stone-400"
     >
       {icon ? icon : <span className="text-[9px] font-mono">{tag.slice(0, 2)}</span>}
     </span>
@@ -360,7 +520,7 @@ function Projects() {
       tags: ["Laravel", "Vue.js", "Bootstrap", "Mysql"],
       type: "mobile",
       playStore: "https://play.google.com/store/search?q=lovecar&c=apps&hl=en",
-      appStore: "https://apps.apple.com/us/iphone/search?term=lovecar",
+      appStore: "https://apps.apple.com/us/app/love-car/id6739915707",
       github: "#",
     },
     {
@@ -369,9 +529,9 @@ function Projects() {
       description:
         "Streamlined the vehicle browsing experience by building a custom REST API and database. Focused on high-performance UI rendering using Vue.js and ensuring cross-device compatibility with Bootstrap.",
       tags: ["Laravel", "Vue.js", "Bootstrap", "Mysql"],
-      type: "mobile",
-      live: "https://play.google.com/store/search?q=lovecar&c=apps&hl=en",
-      github: "#",
+      // type: "mobile",
+      // live: "#",
+      // github: "#",
     },
     {
       title: "Zo Genealogy",
@@ -438,7 +598,7 @@ function Projects() {
   const visibleProjects = showAll ? projects : projects.slice(0, 4);
 
   return (
-    <section id="projects" className="py-16 bg-black scroll-mt-16">
+    <section id="projects" className="py-24 bg-black scroll-mt-20">
       <div className="max-w-5xl mx-auto px-6">
         <div className="flex flex-col items-center mb-10">
           <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
@@ -500,16 +660,17 @@ function Projects() {
                       )}
                       {project.appStore ? (
                         <a
+                          href={project.appStore}
                           target="_blank"
                           rel="noopener noreferrer"
                           title="Get it on the App Store"
                           className="text-stone-400 hover:text-purple-400 transition-colors"
                         >
-                          <FaApple size={17} />
+                          <FaAppStoreIos size={17} />
                         </a>
                       ) : (
                         <span title="Not on the App Store" className="text-stone-700">
-                          <FaApple size={17} />
+                          <FaAppStoreIos size={17} />
                         </span>
                       )}
                     </div>
@@ -544,95 +705,476 @@ function Projects() {
   );
 }
 
+function useBackdropStars(count = 55) {
+  const [stars] = useState(() =>
+    Array.from({ length: count }).map(() => ({
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 1.6 + 0.5,
+      delay: Math.random() * 6,
+      dur: 3 + Math.random() * 4,
+    }))
+  );
+  return stars;
+}
+
 function Skills() {
-  const skills = [
-    { name: "HTML", icon: <FaHtml5 size={32} className="text-orange-500" /> },
-    { name: "CSS", icon: <FaCss3Alt size={32} className="text-blue-500" /> },
+  const [ref, inView] = useInView(0.15);
+  const stars = useBackdropStars();
+
+  const CLUSTERS = [
     {
-      name: "JavaScript",
-      icon: <FaJs size={32} className="text-yellow-400" />,
+      id: "frontend",
+      label: "frontend",
+      color: "#a78bfa",
+      glow: "rgba(167,139,250,0.55)",
+      hub: { x: 150, y: 120 },
+      skills: [
+        { name: "HTML", icon: <FaHtml5 size={20} className="text-orange-500" />, pos: { x: 255, y: 55 } },
+        { name: "CSS", icon: <FaCss3Alt size={20} className="text-blue-500" />, pos: { x: 320, y: 105 } },
+        { name: "JavaScript", icon: <FaJs size={20} className="text-yellow-400" />, pos: { x: 300, y: 190 } },
+        { name: "React.js", icon: <FaReact size={20} className="text-cyan-400" />, pos: { x: 195, y: 225 } },
+        { name: "Vue.js", icon: <FaVuejs size={20} className="text-green-500" />, pos: { x: 75, y: 210 } },
+        { name: "Tailwind", icon: <SiTailwindcss size={20} className="text-sky-400" />, pos: { x: 30, y: 145 } },
+        { name: "Bootstrap", icon: <FaBootstrap size={20} className="text-purple-400" />, pos: { x: 100, y: 55 } },
+      ],
     },
-    { name: "React.js", icon: <FaReact size={32} className="text-cyan-400" /> },
-    { name: "Vue.js", icon: <FaVuejs size={32} className="text-green-500" /> },
-    { name: "Laravel", icon: <FaLaravel size={32} className="text-red-500" /> },
-    { name: "PHP", icon: <FaPhp size={32} className="text-indigo-400" /> },
-    { name: "MySQL", icon: <SiMysql size={32} className="text-blue-400" /> },
     {
-      name: "Tailwind",
-      icon: <SiTailwindcss size={32} className="text-sky-400" />,
+      id: "backend",
+      label: "backend",
+      color: "#f472b6",
+      glow: "rgba(244,114,182,0.55)",
+      hub: { x: 560, y: 265 },
+      skills: [
+        { name: "PHP", icon: <FaPhp size={20} className="text-indigo-400" />, pos: { x: 640, y: 210 } },
+        { name: "Laravel", icon: <FaLaravel size={20} className="text-red-500" />, pos: { x: 665, y: 295 } },
+        { name: "MySQL", icon: <SiMysql size={20} className="text-blue-400" />, pos: { x: 605, y: 355 } },
+        {
+          name: "Postgresql",
+          icon: <SiPostgresql size={20} className="text-blue-400" />,
+          pos: { x: 530, y: 345 },
+        },
+      ],
     },
     {
-      name: "Bootstrap",
-      icon: <FaBootstrap size={32} className="text-purple-500" />,
-    },
-    {
-      name: "Adobe Illustrator",
-      icon: <TbBrandAdobeIllustrator size={32} className="text-orange-400" />,
+      id: "tools",
+      label: "tools & design",
+      color: "#fbbf24",
+      glow: "rgba(251,191,36,0.55)",
+      hub: { x: 350, y: 360 }, // shifted left from 400
+      skills: [
+        {
+          name: "Adobe Illustrator",
+          icon: <TbBrandAdobeIllustrator size={20} className="text-orange-400" />,
+          pos: { x: 430, y: 330 }, // was 480
+        },
+        {
+          name: "GitHub",
+          icon: <FaGithub size={20} className="text-orange-400" />,
+          pos: { x: 470, y: 385 }, // was 520
+        },
+        {
+          name: "Postman",
+          icon: <SiPostman size={20} className="text-orange-400" />,
+          pos: { x: 250, y: 430 }, // was 300
+        },
+        {
+          name: "Bruno",
+          icon: <SiBruno size={20} className="text-orange-400" />,
+          pos: { x: 340, y: 440 }, // was 390
+        },
+        {
+          name: "Figma",
+          icon: <FaFigma size={20} className="text-orange-400" />,
+          pos: { x: 235, y: 350 }, // was 285
+        },
+      ],
     },
   ];
 
+  const HUB_LINKS = [
+    [CLUSTERS[0].hub, CLUSTERS[1].hub],
+    [CLUSTERS[1].hub, CLUSTERS[2].hub],
+  ];
+
+  let clock = 0;
+  const timeline = CLUSTERS.map((cluster) => {
+    const hubDelay = clock;
+    clock += 260;
+    const skillDelays = cluster.skills.map(() => {
+      const d = clock;
+      clock += 170;
+      return d;
+    });
+    return { hubDelay, skillDelays };
+  });
+  const totalDuration = clock;
+
   return (
-    <Section id="skills" title="Skills & Technologies">
-      <div className="flex justify-center">
-        <div className="relative group max-w-5xl w-full">
-          <div className="grid grid-cols-5 gap-4 mb-6 px-4">
-            {skills.map((skill, index) => (
-              <div key={index} className="text-center">
-                <span className="text-stone-400 text-xs font-bold tracking-[0.2em] pb-1 px-4">
-                  {skill.name}
+    <Section id="skills">
+      <div className="flex flex-col items-center mb-10">
+        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+          Skills
+        </h2>
+      </div>
+      <style>{`
+        @keyframes gx-twinkle {
+          0%, 100% { opacity: 0.15; }
+          50% { opacity: 0.9; }
+        }
+        @keyframes gx-drift {
+          0% { transform: translate(0px, 0px) rotate(0deg); }
+          50% { transform: translate(6px, -8px) rotate(0.4deg); }
+          100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+        @keyframes gx-pulse {
+          0%, 100% { box-shadow: 0 0 0 0 var(--gx-glow); }
+          50% { box-shadow: 0 0 16px 4px var(--gx-glow); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .gx-drift, .gx-star { animation: none !important; }
+        }
+        .gx-drift { animation: gx-drift 22s ease-in-out infinite; }
+        .gx-star { animation: gx-twinkle 4s ease-in-out infinite; }
+      `}</style>
+
+      <div className="relative max-w-4xl mx-auto -mt-6">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-purple-500/10 blur-3xl" />
+          <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full bg-pink-500/10 blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 w-72 h-72 rounded-full bg-amber-500/5 blur-3xl" />
+        </div>
+
+        <div
+          ref={ref}
+          className="relative w-full gx-drift"
+          style={{ aspectRatio: "700 / 460" }}
+        >
+          <svg viewBox="0 0 700 460" className="absolute inset-0 w-full h-full" style={{ overflow: "visible" }}>
+            {stars.map((s, i) => (
+              <circle
+                key={`bg-${i}`}
+                cx={`${s.x}%`}
+                cy={`${s.y}%`}
+                r={s.size}
+                fill="#ffffff"
+                className="gx-star"
+                style={{ animationDelay: `${s.delay}s`, animationDuration: `${s.dur}s` }}
+              />
+            ))}
+
+            {HUB_LINKS.map(([a, b], i) => (
+              <line
+                key={`hublink-${i}`}
+                x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+                stroke="#ffffff"
+                strokeOpacity={inView ? 0.12 : 0}
+                strokeWidth={1}
+                strokeDasharray="2 6"
+                style={{ transition: `stroke-opacity 900ms ease ${totalDuration}ms` }}
+              />
+            ))}
+
+            {CLUSTERS.map((cluster, ci) =>
+              cluster.skills.map((skill, si) => {
+                const delay = timeline[ci].skillDelays[si];
+                const length = Math.hypot(cluster.hub.x - skill.pos.x, cluster.hub.y - skill.pos.y);
+                return (
+                  <line
+                    key={`${cluster.id}-line-${si}`}
+                    x1={cluster.hub.x} y1={cluster.hub.y}
+                    x2={skill.pos.x} y2={skill.pos.y}
+                    stroke={cluster.color}
+                    strokeWidth={1}
+                    strokeDasharray={length}
+                    strokeDashoffset={inView ? 0 : length}
+                    strokeOpacity={0.5}
+                    style={{ transition: `stroke-dashoffset 650ms ease ${delay}ms` }}
+                  />
+                );
+              })
+            )}
+
+            {CLUSTERS.map((cluster, ci) => (
+              <circle key={`comet-${cluster.id}`} r="2.5" fill={cluster.color} opacity={inView ? 0.9 : 0}>
+                <animateMotion
+                  dur="3.4s"
+                  begin={`${(totalDuration + ci * 400) / 1000}s`}
+                  repeatCount="indefinite"
+                  path={`M${cluster.hub.x},${cluster.hub.y} L${cluster.skills[0].pos.x},${cluster.skills[0].pos.y}`}
+                />
+              </circle>
+            ))}
+          </svg>
+
+          {CLUSTERS.map((cluster, ci) => {
+            const delay = timeline[ci].hubDelay;
+            return (
+              <div
+                key={cluster.id}
+                className="absolute flex items-center gap-1.5 px-3 py-1.5 rounded-full border backdrop-blur-sm transition-all duration-500 ease-out"
+                style={{
+                  left: `${(cluster.hub.x / 700) * 100}%`,
+                  top: `${(cluster.hub.y / 460) * 100}%`,
+                  background: "rgba(255,255,255,0.06)",
+                  borderColor: `${cluster.color}55`,
+                  opacity: inView ? 1 : 0,
+                  transform: `translate(-50%, -50%) scale(${inView ? 1 : 0.6})`,
+                  transitionDelay: `${delay}ms`,
+                }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: cluster.color, boxShadow: `0 0 8px ${cluster.color}` }} />
+                <span className="text-[11px] font-mono tracking-wide text-stone-100 whitespace-nowrap">
+                  {cluster.label}
                 </span>
               </div>
-            ))}
-          </div>
+            );
+          })}
 
-          <div className="relative border border-purple-400 rounded-2xl p-10 bg-black/20 overflow-hidden">
-            <div className="relative overflow-hidden w-full">
-              <div
-                className="flex gap-12 animate-marquee whitespace-nowrap w-max hover:[animation-play-state:paused]"
-                style={{ animationDuration: "25s" }}
-              >
-                {[...skills, ...skills].map((skill, index) => (
+          {CLUSTERS.map((cluster, ci) =>
+            cluster.skills.map((skill, si) => {
+              const delay = timeline[ci].skillDelays[si];
+              return (
+                <div
+                  key={`${cluster.id}-node-${si}`}
+                  className="absolute group"
+                  style={{
+                    left: `${(skill.pos.x / 700) * 100}%`,
+                    top: `${(skill.pos.y / 460) * 100}%`,
+                    opacity: inView ? 1 : 0,
+                    transform: `translate(-50%, -50%) scale(${inView ? 1 : 0.3})`,
+                    transition: `opacity 450ms ease ${delay}ms, transform 450ms cubic-bezier(0.34,1.56,0.64,1) ${delay}ms`,
+                  }}
+                >
                   <div
-                    key={index}
-                    className="flex flex-col items-center min-w-[80px] flex-shrink-0 transition-transform duration-300 hover:scale-110"
+                    className="flex items-center justify-center rounded-full bg-stone-900 border w-10 h-10 transition-transform duration-300 group-hover:scale-125 cursor-default"
+                    style={{
+                      borderColor: `${cluster.color}66`,
+                      ["--gx-glow"]: cluster.glow,
+                      animation: inView ? "gx-pulse 3.2s ease-in-out infinite" : "none",
+                      animationDelay: `${delay + 300}ms`,
+                    }}
                   >
-                    <div className="mb-2">{skill.icon}</div>
+                    {skill.icon}
                   </div>
-                ))}
-              </div>
-            </div>
-          </div>
+                  <span className="absolute left-1/2 top-full mt-1.5 -translate-x-1/2 text-[10px] font-medium text-stone-400 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    {skill.name}
+                  </span>
+                </div>
+              );
+            })
+          )}
         </div>
       </div>
     </Section>
   );
 }
 
-function Contact() {
-  return (
-    <Section id="contact" title="Get In Touch">
-      <div className="mt-5 flex flex-col items-center">
-        <p className="text-stone-500 text-sm tracking-widest mb-5">
-          Want more about me?
-        </p>
+const CONTACT_EMAIL = "hsunadikyaw.hndk@gmail.com";
 
-        <div className="flex items-center gap-10">
-          <ContactLink
-            href="https://github.com/misu05-dev"
-            icon={<FaGithub size={28} />}
-            label="GitHub"
-          />
-          <ContactLink
-            href="https://x.com/Shie325"
-            icon={<FaXTwitter size={28} />}
-            label="X (Twitter)"
-          />
-          <ContactLink
-            href="https://bsky.app/profile/su--e.bsky.social"
-            icon={<FaBluesky size={28} />}
-            label="Bluesky"
-          />
-        </div>
+function GlassCard({ children, className = "" }) {
+  return (
+    <div
+      className={
+        "relative rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-xl " +
+        "shadow-[0_8px_32px_rgba(0,0,0,0.35)] overflow-hidden " +
+        className
+      }
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/[0.06] to-transparent" />
+      <div className="relative">{children}</div>
+    </div>
+  );
+}
+
+function Field({ as = "input", ...props }) {
+  const Tag = as;
+  return (
+    <Tag
+      {...props}
+      className="w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3
+                 text-sm text-stone-200 placeholder:text-stone-500
+                 focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.06]
+                 transition"
+    />
+  );
+}
+
+function Contact() {
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+
+  const handleChange = (e) =>
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+      setStatus("error");
+      return;
+    }
+
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          message: form.message,
+          _subject: `New portfolio message from ${form.name}`,
+        }),
+      });
+      if (!res.ok) throw new Error("Request failed");
+      setStatus("success");
+      setForm({ name: "", email: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
+  };
+
+  function SpotlightCard({ children, className = "" }) {
+    const ref = useRef(null);
+
+    const handleMouseMove = (e) => {
+      const rect = ref.current.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      ref.current.style.setProperty("--spot-x", `${x}px`);
+      ref.current.style.setProperty("--spot-y", `${y}px`);
+    };
+
+    return (
+      <div
+        ref={ref}
+        onMouseMove={handleMouseMove}
+        className={`relative overflow-hidden group ${className}`}
+      >
+        <div
+          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          style={{
+            background:
+              "radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.12), transparent 70%)",
+          }}
+        />
+        {children}
+      </div>
+    );
+  }
+
+  return (
+    <Section id="contact">
+      <div className="flex flex-col items-center mb-10">
+        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+          Get In Touch
+        </h2>
+      </div>
+      <p className="text-center text-stone-500 text-sm tracking-widest mb-12">
+        Want to know more about me?
+      </p>
+
+      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {/* Contact info card */}
+        <SpotlightCard>
+          <GlassCard className="p-8 h-full flex flex-col">
+            <h3 className="text-2xl font-bold text-stone-100 mb-3">
+              Let's build something great
+            </h3>
+            <p className="text-stone-400 text-sm leading-relaxed mb-8">
+              Feel free to reach out. I'm always interested in discussing new ideas and opportunities.
+            </p>
+
+            <div className="space-y-6 mt-auto">
+              <a
+                href={`mailto:${CONTACT_EMAIL}`}
+                className="flex items-center gap-3 text-stone-300 hover:text-purple-400 transition text-sm"
+              >
+                <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/[0.05] border border-white/10">
+                  <FaEnvelope size={15} />
+                </span>
+                {CONTACT_EMAIL}
+              </a>
+
+              <div className="flex items-center justify-center gap-10 pt-2">
+                <ContactLink
+                  href="https://github.com/misu05-dev"
+                  icon={<FaGithub size={22} />}
+                  label="GitHub"
+                />
+                <ContactLink
+                  href="https://x.com/Shie325"
+                  icon={<FaXTwitter size={22} />}
+                  label="X (Twitter)"
+                />
+                <ContactLink
+                  href="https://bsky.app/profile/su--e.bsky.social"
+                  icon={<FaBluesky size={22} />}
+                  label="Bluesky"
+                />
+              </div>
+            </div>
+          </GlassCard>
+        </SpotlightCard>
+
+        {/* Contact form card */}
+        <SpotlightCard>
+          <GlassCard className="p-8 h-full">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Field
+                name="name"
+                placeholder="Your name"
+                value={form.name}
+                onChange={handleChange}
+              />
+              <Field
+                type="email"
+                name="email"
+                placeholder="Email address"
+                value={form.email}
+                onChange={handleChange}
+              />
+              <Field
+                as="textarea"
+                name="message"
+                rows={4}
+                placeholder="Write your message..."
+                value={form.message}
+                onChange={handleChange}
+              />
+
+              <button
+                type="submit"
+                disabled={status === "sending"}
+                className="w-full flex items-center justify-center gap-2 px-6 py-3
+                         rounded-xl bg-gradient-to-r from-purple-700 to-purple-900
+                         text-stone-100 font-medium hover:scale-[1.02] active:scale-95
+                         transition disabled:opacity-60 disabled:hover:scale-100"
+              >
+                {status === "sending" ? (
+                  <>
+                    <FaSpinner size={14} className="animate-spin" /> Sending...
+                  </>
+                ) : (
+                  <>
+                    <FaPaperPlane size={13} /> Send Message
+                  </>
+                )}
+              </button>
+
+              {status === "success" && (
+                <p className="flex items-center gap-2 text-emerald-400 text-xs pt-1">
+                  <FaCheckCircle size={13} /> Message sent — thanks for reaching out!
+                </p>
+              )}
+              {status === "error" && (
+                <p className="flex items-center gap-2 text-red-400 text-xs pt-1">
+                  <FaExclamationCircle size={13} /> Fill out every field, or try again in a moment.
+                </p>
+              )}
+            </form>
+          </GlassCard>
+        </SpotlightCard>
       </div>
     </Section>
   );
@@ -660,15 +1202,87 @@ function Footer() {
   );
 }
 
+function CustomCursor() {
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
+  const pos = useRef({ x: 0, y: 0 });
+  const ringPos = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const moveDot = (e) => {
+      pos.current = { x: e.clientX, y: e.clientY };
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      }
+    };
+
+    let raf;
+    const animateRing = () => {
+      ringPos.current.x += (pos.current.x - ringPos.current.x) * 0.15;
+      ringPos.current.y += (pos.current.y - ringPos.current.y) * 0.15;
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px)`;
+      }
+      raf = requestAnimationFrame(animateRing);
+    };
+
+    const growCursor = () => ringRef.current?.classList.add("scale-150", "border-purple-400");
+    const shrinkCursor = () => ringRef.current?.classList.remove("scale-150", "border-purple-400");
+
+    // Delegated listeners on document instead of querySelectorAll-once: this way
+    // new links/buttons added later (e.g. "View All Projects" expanding the grid)
+    // are picked up automatically, and we never lose track of an element that
+    // unmounts mid-hover.
+    const handleOver = (e) => {
+      if (e.target instanceof Element && e.target.closest("a, button")) {
+        growCursor();
+      }
+    };
+    const handleOut = (e) => {
+      const related = e.relatedTarget;
+      const stillOnInteractive =
+        related instanceof Element && related.closest("a, button");
+      if (!stillOnInteractive) shrinkCursor();
+    };
+
+    window.addEventListener("mousemove", moveDot);
+    document.addEventListener("mouseover", handleOver);
+    document.addEventListener("mouseout", handleOut);
+    animateRing();
+
+    return () => {
+      window.removeEventListener("mousemove", moveDot);
+      document.removeEventListener("mouseover", handleOver);
+      document.removeEventListener("mouseout", handleOut);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <>
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 w-1.5 h-1.5 bg-purple-400 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 hidden md:block"
+      />
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 w-8 h-8 border border-purple-500/50 rounded-full pointer-events-none z-[9999] -translate-x-1/2 -translate-y-1/2 transition-[transform,border-color] duration-200 ease-out hidden md:block"
+      />
+    </>
+  );
+}
+
 export default function App() {
   return (
     <div className="bg-black min-h-screen font-sans scroll-smooth">
+      {/* <div className="bg-black min-h-screen font-sans scroll-smooth cursor-none md:cursor-none"> */}
+      {/* <CustomCursor /> */}
       <Navbar />
       <Intro />
       <About />
+      <Skills />
       <Experience />
       <Projects />
-      <Skills />
       <Contact />
       <Footer />
     </div>

@@ -2,26 +2,80 @@
 @tailwind components;
 @tailwind utilities; */
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-  @keyframes marquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+@theme {
+  --font-sans: "Atkinson Hyperlegible", sans-serif;
+}
+
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
   }
 
-  .animate-marquee {
-    animation-name: marquee;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation-name: marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
   }
 
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+  100% {
+    transform: translateX(-50%);
   }
- 
-  
+}
 
+/* pink/purple beam - linear gradient cone */
+@keyframes spotlightReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.35, 0);
+  }
+
+  30% {
+    opacity: 0.6;
+    transform: translateY(-10px) scale(0.6, 0.4);
+  }
+
+  70% {
+    opacity: 0.9;
+    transform: translateY(0) scale(0.9, 0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+.spotlight-beam {
+  background: linear-gradient(180deg,
+      rgba(192, 132, 252, 0.65) 0%,
+      rgba(178, 114, 241, 0.25) 45%,
+      transparent 85%);
+
+  clip-path: polygon(38% 0%,
+      62% 0%,
+      100% 100%,
+      0% 100%);
+
+  filter: blur(40px);
+
+  transform-origin: top center;
+
+  opacity: 0;
+}
+
+.spotlight-beam.show {
+  animation: spotlightReveal 1.5s linear forwards;
+}
