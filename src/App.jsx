@@ -12,10 +12,10 @@ import {
   FaArrowRight,
   FaGithub,
   FaFigma,
-  FaEnvelope, FaPaperPlane, FaSpinner, FaCheckCircle, FaExclamationCircle, FaGooglePlay, FaApple, FaGlobe, FaAppStoreIos
+  FaEnvelope, FaPaperPlane, FaSpinner, FaCheckCircle, FaExclamationCircle, FaGooglePlay, FaApple, FaGlobe, FaAppStoreIos, FaDocker
 } from "react-icons/fa";
 import { FaBluesky, FaXTwitter } from "react-icons/fa6";
-import { SiTailwindcss, SiMysql, SiPostgresql, SiPostman, SiBruno } from "react-icons/si";
+import { SiTailwindcss, SiMysql, SiPostgresql, SiPostman, SiBruno, SiSocketdotio, SiMongodb } from "react-icons/si";
 import { TbBrandAdobeIllustrator } from "react-icons/tb";
 import LoveCarLogo from "./images/lovecar.webp";
 import ZoGenLogo from "./images/zogenealogy.png";
@@ -730,29 +730,80 @@ function Skills() {
       glow: "rgba(167,139,250,0.55)",
       hub: { x: 150, y: 120 },
       skills: [
-        { name: "HTML", icon: <FaHtml5 size={20} className="text-orange-500" />, pos: { x: 255, y: 55 } },
-        { name: "CSS", icon: <FaCss3Alt size={20} className="text-blue-500" />, pos: { x: 320, y: 105 } },
-        { name: "JavaScript", icon: <FaJs size={20} className="text-yellow-400" />, pos: { x: 300, y: 190 } },
-        { name: "React.js", icon: <FaReact size={20} className="text-cyan-400" />, pos: { x: 195, y: 225 } },
-        { name: "Vue.js", icon: <FaVuejs size={20} className="text-green-500" />, pos: { x: 75, y: 210 } },
-        { name: "Tailwind", icon: <SiTailwindcss size={20} className="text-sky-400" />, pos: { x: 30, y: 145 } },
-        { name: "Bootstrap", icon: <FaBootstrap size={20} className="text-purple-400" />, pos: { x: 100, y: 55 } },
+        {
+          name: "HTML",
+          icon: <FaHtml5 size={20} className="text-orange-500" />,
+          pos: { x: 255, y: 55 },
+        },
+        {
+          name: "CSS",
+          icon: <FaCss3Alt size={20} className="text-blue-500" />,
+          pos: { x: 320, y: 105 },
+        },
+        {
+          name: "JavaScript",
+          icon: <FaJs size={20} className="text-yellow-400" />,
+          pos: { x: 300, y: 190 },
+        },
+        {
+          name: "React.js",
+          icon: <FaReact size={20} className="text-cyan-400" />,
+          pos: { x: 195, y: 225 },
+        },
+        {
+          name: "Vue.js",
+          icon: <FaVuejs size={20} className="text-green-500" />,
+          pos: { x: 75, y: 210 },
+        },
+        {
+          name: "Tailwind",
+          icon: <SiTailwindcss size={20} className="text-sky-400" />,
+          pos: { x: 30, y: 145 },
+        },
+        {
+          name: "Bootstrap",
+          icon: <FaBootstrap size={20} className="text-purple-400" />,
+          pos: { x: 100, y: 55 },
+        },
       ],
     },
+
     {
       id: "backend",
       label: "backend",
       color: "#f472b6",
       glow: "rgba(244,114,182,0.55)",
-      hub: { x: 560, y: 265 },
+      hub: { x: 550, y: 245 },
       skills: [
-        { name: "PHP", icon: <FaPhp size={20} className="text-indigo-400" />, pos: { x: 640, y: 210 } },
-        { name: "Laravel", icon: <FaLaravel size={20} className="text-red-500" />, pos: { x: 665, y: 295 } },
-        { name: "MySQL", icon: <SiMysql size={20} className="text-blue-400" />, pos: { x: 605, y: 355 } },
         {
-          name: "Postgresql",
-          icon: <SiPostgresql size={20} className="text-blue-400" />,
-          pos: { x: 530, y: 345 },
+          name: "PHP",
+          icon: <FaPhp size={20} className="text-pink-400" />,
+          pos: { x: 625, y: 195 },
+        },
+        {
+          name: "Laravel",
+          icon: <FaLaravel size={20} className="text-red-500" />,
+          pos: { x: 650, y: 275 },
+        },
+        {
+          name: "MySQL",
+          icon: <SiMysql size={20} className="text-pink-300" />,
+          pos: { x: 595, y: 350 },
+        },
+        {
+          name: "PostgreSQL",
+          icon: <SiPostgresql size={20} className="text-fuchsia-300" />,
+          pos: { x: 520, y: 340 },
+        },
+        {
+          name: "Socket.io",
+          icon: <SiSocketdotio size={20} className="text-rose-300" />,
+          pos: { x: 465, y: 285 },
+        },
+        {
+          name: "MongoDB",
+          icon: <SiMongodb size={20} className="text-pink-200" />,
+          pos: { x: 520, y: 195 },
         },
       ],
     },
@@ -761,32 +812,44 @@ function Skills() {
       label: "tools & design",
       color: "#fbbf24",
       glow: "rgba(251,191,36,0.55)",
-      hub: { x: 350, y: 360 }, // shifted left from 400
+
+      hub: { x: 310, y: 360 },
+
       skills: [
         {
           name: "Adobe Illustrator",
-          icon: <TbBrandAdobeIllustrator size={20} className="text-orange-400" />,
-          pos: { x: 430, y: 330 }, // was 480
+          icon: (
+            <TbBrandAdobeIllustrator
+              size={20}
+              className="text-amber-400"
+            />
+          ),
+          pos: { x: 375, y: 295 },
         },
         {
           name: "GitHub",
-          icon: <FaGithub size={20} className="text-orange-400" />,
-          pos: { x: 470, y: 385 }, // was 520
+          icon: <FaGithub size={20} className="text-zinc-200" />,
+          pos: { x: 445, y: 355 },
+        },
+        {
+          name: "Docker",
+          icon: <FaDocker size={20} className="text-sky-400" />,
+          pos: { x: 420, y: 425 },
+        },
+        {
+          name: "Bruno",
+          icon: <SiBruno size={20} className="text-yellow-300" />,
+          pos: { x: 275, y: 455 },
         },
         {
           name: "Postman",
           icon: <SiPostman size={20} className="text-orange-400" />,
-          pos: { x: 250, y: 430 }, // was 300
-        },
-        {
-          name: "Bruno",
-          icon: <SiBruno size={20} className="text-orange-400" />,
-          pos: { x: 340, y: 440 }, // was 390
+          pos: { x: 190, y: 410 },
         },
         {
           name: "Figma",
-          icon: <FaFigma size={20} className="text-orange-400" />,
-          pos: { x: 235, y: 350 }, // was 285
+          icon: <FaFigma size={20} className="text-pink-400" />,
+          pos: { x: 200, y: 310 },
         },
       ],
     },
@@ -982,6 +1045,7 @@ function GlassCard({ children, className = "" }) {
       }
     >
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-white/[0.06] to-transparent" />
+
       <div className="relative">{children}</div>
     </div>
   );
@@ -989,6 +1053,7 @@ function GlassCard({ children, className = "" }) {
 
 function Field({ as = "input", ...props }) {
   const Tag = as;
+
   return (
     <Tag
       {...props}
@@ -1000,68 +1065,108 @@ function Field({ as = "input", ...props }) {
   );
 }
 
-function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sending | success | error
+function SpotlightCard({ children, className = "" }) {
+  const ref = useRef(null);
 
-  const handleChange = (e) =>
-    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  const handleMouseMove = (e) => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    ref.current.style.setProperty("--spot-x", `${x}px`);
+    ref.current.style.setProperty("--spot-y", `${y}px`);
+  };
+
+  return (
+    <div
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      className={`relative overflow-hidden group ${className}`}
+    >
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        style={{
+          background:
+            "radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.12), transparent 70%)",
+        }}
+      />
+
+      {children}
+    </div>
+  );
+}
+
+function Contact() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [status, setStatus] = useState("idle");
+  // idle | sending | success | error
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm((f) => ({
+      ...f,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+
+    // Validate fields
+    if (
+      !form.name.trim() ||
+      !form.email.trim() ||
+      !form.message.trim()
+    ) {
       setStatus("error");
       return;
     }
 
     setStatus("sending");
+
     try {
-      const res = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          message: form.message,
-          _subject: `New portfolio message from ${form.name}`,
-        }),
-      });
-      if (!res.ok) throw new Error("Request failed");
+      const res = await fetch(
+        `https://formsubmit.co/ajax/${CONTACT_EMAIL}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: form.name,
+            email: form.email,
+            message: form.message,
+            _subject: `New portfolio message from ${form.name}`,
+          }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Request failed");
+      }
+
       setStatus("success");
-      setForm({ name: "", email: "", message: "" });
-    } catch {
+
+      setForm({
+        name: "",
+        email: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
       setStatus("error");
     }
   };
-
-  function SpotlightCard({ children, className = "" }) {
-    const ref = useRef(null);
-
-    const handleMouseMove = (e) => {
-      const rect = ref.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      ref.current.style.setProperty("--spot-x", `${x}px`);
-      ref.current.style.setProperty("--spot-y", `${y}px`);
-    };
-
-    return (
-      <div
-        ref={ref}
-        onMouseMove={handleMouseMove}
-        className={`relative overflow-hidden group ${className}`}
-      >
-        <div
-          className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-          style={{
-            background:
-              "radial-gradient(220px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(255,255,255,0.12), transparent 70%)",
-          }}
-        />
-        {children}
-      </div>
-    );
-  }
 
   return (
     <Section id="contact">
@@ -1070,70 +1175,96 @@ function Contact() {
           Get In Touch
         </h2>
       </div>
+
       <p className="text-center text-stone-500 text-sm tracking-widest mb-12">
         Want to know more about me?
       </p>
 
       <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-        {/* Contact info card */}
+
         <SpotlightCard>
           <GlassCard className="p-8 h-full flex flex-col">
+
             <h3 className="text-2xl font-bold text-stone-100 mb-3">
               Let's build something great
             </h3>
+
             <p className="text-stone-400 text-sm leading-relaxed mb-8">
-              Feel free to reach out. I'm always interested in discussing new ideas and opportunities.
+              Feel free to reach out. I'm always interested in discussing
+              new ideas and opportunities.
             </p>
 
             <div className="space-y-6 mt-auto">
+
+              {/* Email */}
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
                 className="flex items-center gap-3 text-stone-300 hover:text-purple-400 transition text-sm"
               >
-                <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-white/[0.05] border border-white/10">
+                <span
+                  className="flex items-center justify-center w-9 h-9
+                             rounded-lg bg-white/[0.05] border border-white/10"
+                >
                   <FaEnvelope size={15} />
                 </span>
+
                 {CONTACT_EMAIL}
               </a>
 
+              {/* Social Links */}
               <div className="flex items-center justify-center gap-10 pt-2">
+
                 <ContactLink
                   href="https://github.com/misu05-dev"
                   icon={<FaGithub size={22} />}
                   label="GitHub"
                 />
+
                 <ContactLink
                   href="https://x.com/Shie325"
                   icon={<FaXTwitter size={22} />}
                   label="X (Twitter)"
                 />
+
                 <ContactLink
                   href="https://bsky.app/profile/su--e.bsky.social"
                   icon={<FaBluesky size={22} />}
                   label="Bluesky"
                 />
+
               </div>
             </div>
           </GlassCard>
         </SpotlightCard>
 
-        {/* Contact form card */}
         <SpotlightCard>
           <GlassCard className="p-8 h-full">
-            <form onSubmit={handleSubmit} className="space-y-4">
+
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-4"
+            >
+
+              {/* Name */}
               <Field
                 name="name"
                 placeholder="Your name"
                 value={form.name}
                 onChange={handleChange}
+                autoComplete="name"
               />
+
+              {/* Email */}
               <Field
                 type="email"
                 name="email"
                 placeholder="Email address"
                 value={form.email}
                 onChange={handleChange}
+                autoComplete="email"
               />
+
+              {/* Message */}
               <Field
                 as="textarea"
                 name="message"
@@ -1143,38 +1274,87 @@ function Contact() {
                 onChange={handleChange}
               />
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={status === "sending"}
-                className="w-full flex items-center justify-center gap-2 px-6 py-3
-                         rounded-xl bg-gradient-to-r from-purple-700 to-purple-900
-                         text-stone-100 font-medium hover:scale-[1.02] active:scale-95
-                         transition disabled:opacity-60 disabled:hover:scale-100"
+                className="
+                  w-full
+                  flex
+                  items-center
+                  justify-center
+                  gap-2
+                  px-6
+                  py-3
+                  rounded-xl
+                  bg-gradient-to-r
+                  from-purple-700
+                  to-purple-900
+                  text-stone-100
+                  font-medium
+                  hover:scale-[1.02]
+                  active:scale-95
+                  transition
+                  disabled:opacity-60
+                  disabled:hover:scale-100
+                "
               >
                 {status === "sending" ? (
                   <>
-                    <FaSpinner size={14} className="animate-spin" /> Sending...
+                    <FaSpinner
+                      size={14}
+                      className="animate-spin"
+                    />
+                    Sending...
                   </>
                 ) : (
                   <>
-                    <FaPaperPlane size={13} /> Send Message
+                    <FaPaperPlane size={13} />
+                    Send Message
                   </>
                 )}
               </button>
 
+              {/* Success Message */}
               {status === "success" && (
-                <p className="flex items-center gap-2 text-emerald-400 text-xs pt-1">
-                  <FaCheckCircle size={13} /> Message sent — thanks for reaching out!
+                <p
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                    text-emerald-400
+                    text-xs
+                    pt-1
+                  "
+                >
+                  <FaCheckCircle size={13} />
+
+                  Message sent — thanks for reaching out!
                 </p>
               )}
+
+              {/* Error Message */}
               {status === "error" && (
-                <p className="flex items-center gap-2 text-red-400 text-xs pt-1">
-                  <FaExclamationCircle size={13} /> Fill out every field, or try again in a moment.
+                <p
+                  className="
+                    flex
+                    items-center
+                    gap-2
+                    text-red-400
+                    text-xs
+                    pt-1
+                  "
+                >
+                  <FaExclamationCircle size={13} />
+
+                  Fill out every field, or try again in a moment.
                 </p>
               )}
+
             </form>
           </GlassCard>
         </SpotlightCard>
+
       </div>
     </Section>
   );
