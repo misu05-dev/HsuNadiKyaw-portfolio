@@ -73,12 +73,12 @@ function Navbar() {
   return (
     <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur text-stone-300 shadow-lg">
       <Container>
-        <div className="flex justify-center py-5 space-x-8">
+        <div className="flex justify-center overflow-x-auto no-scrollbar py-3 sm:py-5 gap-3 sm:gap-0 sm:space-x-8">
           {links.map((link) => (
             <button
               key={link}
               onClick={() => handleScroll(link)}
-              className={`font-bold text-sm tracking-wide transition
+              className={`shrink-0 whitespace-nowrap font-bold text-xs sm:text-sm tracking-wide transition
               ${active === link ? "text-purple-400" : "hover:text-purple-400"}`}
             >
               {link}
@@ -92,10 +92,10 @@ function Navbar() {
 
 function Section({ id, title, children }) {
   return (
-    <section id={id} className="py-24 text-stone-300 scroll-mt-20">
+    <section id={id} className="py-16 md:py-24 text-stone-300 scroll-mt-20">
       <Container>
         {title && (
-          <h2 className="text-3xl font-bold text-stone-200 text-center mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold text-stone-200 text-center mb-8 md:mb-12">
             {title}
           </h2>
         )}
@@ -145,7 +145,7 @@ function Intro() {
     <section
       ref={aboutRef}
       id="about"
-      className="relative pt-60 pb-32 text-center text-stone-300 overflow-hidden"
+      className="relative pt-32 pb-20 md:pt-60 md:pb-32 text-center text-stone-300 overflow-hidden"
     >
       {/* Spotlight */}
       {/* <div
@@ -155,29 +155,30 @@ function Intro() {
       /> */}
 
       <Container>
-        <h1 className="relative z-10 text-5xl sm:text-6xl font-bold text-stone-200 mt-6 flex flex-wrap items-center justify-center gap-2">
+        <h1 className="relative z-10 text-3xl sm:text-5xl md:text-6xl font-bold text-stone-200 mt-6 flex flex-wrap items-center justify-center gap-2">
           Hey! I am
 
           <ParticleText
             text="Hsu Nadi Kyaw"
             particleColor="#c084fc"
-            fontSize={60}
+            fontSizes={{ base: 38, sm: 48, md: 60 }}
             className=""
           />
         </h1>
 
-        <p className="relative z-10 max-w-xl mx-auto text-stone-400 mt-6">
+        <p className="relative z-10 max-w-xl mx-auto text-stone-400 mt-6 px-2 text-sm sm:text-base">
           I craft modern, responsive web applications and beautiful digital
           experiences using modern technologies.
         </p>
 
-        <div className="relative z-10 flex justify-center gap-6 mt-8">
+        <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 px-4">
           <a
             href="https://drive.google.com/file/d/1yopEApiRzSqQEqFvD0WZc3cmWHzuyIm5/view"
             target="_blank"
             rel="noopener noreferrer"
+            className="w-full sm:w-auto"
           >
-            <button className="px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 rounded-full text-stone-200 hover:scale-105 transition">
+            <button className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 rounded-full text-stone-200 hover:scale-105 transition">
               Resume
             </button>
           </a>
@@ -188,7 +189,7 @@ function Intro() {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-600 hover:text-stone-200 transition"
+            className="w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-600 hover:text-stone-200 transition"
           >
             Get in Touch
           </button>
@@ -244,8 +245,8 @@ function About() {
   return (
     <Section id="about">
       {/* Section Heading */}
-      <div className="flex flex-col items-center mb-10">
-        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+      <div className="flex flex-col items-center mb-8 md:mb-10">
+        <h2 className="text-stone-200 text-3xl sm:text-4xl font-bold tracking-tight">
           About Me
         </h2>
         {/* <div className="mt-4 w-12 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" /> */}
@@ -256,12 +257,12 @@ function About() {
         <div className="pointer-events-none absolute -top-20 left-1/4 w-70 h-72 rounded-full bg-purple-500/10 blur-[100px]" />
         <div className="pointer-events-none absolute bottom-0 right-1/4 w-72 h-72 rounded-full bg-pink-500/10 blur-[100px]" />
 
-        <div className="relative grid lg:grid-cols-2 gap-8 items-center">
+        <div className="relative grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
 
           {/* LEFT — Visual */}
           <Reveal delay={150}>
             <div className="relative">
-              <div className="relative rounded-3xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-xl p-6 sm:p-8 overflow-hidden">
+              <div className="relative rounded-3xl border border-white/[0.08] bg-white/[0.025] backdrop-blur-xl p-5 sm:p-6 md:p-8 overflow-hidden">
 
                 <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-purple-500/[0.08] to-transparent pointer-events-none" />
 
@@ -270,12 +271,12 @@ function About() {
                 <div className="absolute top-6 left-10 w-2 h-2 rounded-full bg-pink-400 shadow-[0_0_12px_rgba(236,72,153,0.7)]" />
 
                 {/* Smaller Lottie */}
-                <div className="flex justify-center items-center min-h-[280px] sm:min-h-[340px]">
+                <div className="flex justify-center items-center min-h-[220px] sm:min-h-[280px] md:min-h-[340px]">
                   <Lottie
                     animationData={girlSitting}
                     loop
                     autoplay
-                    className="w-[260px] sm:w-[320px] md:w-[360px]"
+                    className="w-[220px] sm:w-[260px] md:w-[320px] lg:w-[360px]"
                   />
                 </div>
 
@@ -290,11 +291,11 @@ function About() {
           </Reveal>
 
           {/* RIGHT — Content */}
-          <div className="space-y-7">
+          <div className="space-y-5 md:space-y-7">
 
             <Reveal delay={300}>
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-stone-100 leading-tight">
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-stone-100 leading-tight">
                   Full-stack developer focused on building
                   <span className="text-purple-400">
                     {" "}modern and reliable web applications.
@@ -353,13 +354,13 @@ const experiences = [
 export function Experience() {
   return (
     <Section id="experience">
-      <div className="flex flex-col items-center mb-10">
-        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+      <div className="flex flex-col items-center mb-8 md:mb-10">
+        <h2 className="text-stone-200 text-3xl sm:text-4xl font-bold tracking-tight">
           Experience
         </h2>
       </div>
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div className="max-w-6xl mx-auto px-0 sm:px-4 py-8 md:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-10">
 
           {/* Left Column: Section Header */}
           <div className="lg:col-span-4">
@@ -368,7 +369,7 @@ export function Experience() {
                 <HiOutlineBriefcase className="w-4 h-4" /> Career Path
               </div>
 
-              <h2 className="text-stone-100 text-4xl lg:text-5xl font-black tracking-tight leading-none">
+              <h2 className="text-stone-100 text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-none">
                 THE <br />
                 <span
                   className="bg-gradient-to-r from-purple-400 via-pink-500 via-indigo-400 to-purple-400 bg-[length:200%_auto] bg-clip-text text-transparent"
@@ -399,13 +400,13 @@ export function Experience() {
                 key={index}
                 className="group relative p-px rounded-2xl bg-gradient-to-b from-purple-500/20 via-white/5 to-transparent transition-all duration-300 hover:from-purple-500/40"
               >
-                <div className="bg-[#080808] rounded-2xl p-6 sm:p-8 md:p-10 border border-white/5 h-full transition-transform duration-300 group-hover:-translate-y-1">
+                <div className="bg-[#080808] rounded-2xl p-5 sm:p-6 md:p-8 lg:p-10 border border-white/5 h-full transition-transform duration-300 group-hover:-translate-y-1">
 
                   {/* Top Metadata Bar */}
                   <div className="flex flex-wrap items-center justify-between gap-3 mb-6 pb-6 border-b border-white/5">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
                       {/* Logo Container */}
-                      <div className="p-2.5 rounded-xl bg-stone-900 border border-white/10 w-14 h-14 flex items-center justify-center shrink-0">
+                      <div className="p-2 sm:p-2.5 rounded-xl bg-stone-900 border border-white/10 w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center shrink-0">
                         {/* Replace with your logo variable or standard img */}
                         <img
                           src={OISLogo}
@@ -415,10 +416,10 @@ export function Experience() {
                       </div>
 
                       <div>
-                        <h3 className="text-xl sm:text-2xl font-bold text-stone-100 group-hover:text-purple-300 transition-colors">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-stone-100 group-hover:text-purple-300 transition-colors">
                           {job.title}
                         </h3>
-                        <p className="text-purple-400 font-medium text-sm sm:text-base">
+                        <p className="text-purple-400 font-medium text-xs sm:text-sm md:text-base">
                           {job.company}
                         </p>
                       </div>
@@ -436,7 +437,7 @@ export function Experience() {
                   </div>
 
                   {/* Summary Description */}
-                  <p className="text-stone-300 text-base leading-relaxed mb-6 font-normal">
+                  <p className="text-stone-300 text-sm sm:text-base leading-relaxed mb-6 font-normal">
                     {job.desc}
                   </p>
 
@@ -502,7 +503,7 @@ function TagBadge({ tag }) {
   return (
     <span
       title={tag}
-      className="flex items-center justify-center w-8 h-8 bg-white/[0.03] border border-white/[0.06] rounded text-stone-400"
+      className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 bg-white/[0.03] border border-white/[0.06] rounded text-stone-400"
     >
       {icon ? icon : <span className="text-[9px] font-mono">{tag.slice(0, 2)}</span>}
     </span>
@@ -598,24 +599,24 @@ function Projects() {
   const visibleProjects = showAll ? projects : projects.slice(0, 4);
 
   return (
-    <section id="projects" className="py-24 bg-black scroll-mt-20">
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="flex flex-col items-center mb-10">
-          <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+    <section id="projects" className="py-16 md:py-24 bg-black scroll-mt-20">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        <div className="flex flex-col items-center mb-8 md:mb-10">
+          <h2 className="text-stone-200 text-3xl sm:text-4xl font-bold tracking-tight">
             Projects
           </h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           {visibleProjects.map((project, index) => (
             <div
               key={index}
-              className="group relative bg-[#09090b] border border-white/[0.06] rounded-xl p-6 transition-all duration-300 hover:border-white/[0.12] hover:bg-[#0e0e11] hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10"
+              className="group relative bg-[#09090b] border border-white/[0.06] rounded-xl p-5 sm:p-6 transition-all duration-300 hover:border-white/[0.12] hover:bg-[#0e0e11] hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/10"
             >
               <div className="flex flex-col h-full justify-between">
                 <div>
                   <div className="flex justify-between items-center mb-4">
-                    <div className="relative w-12 h-12 rounded-lg overflow-hidden">
+                    <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-lg overflow-hidden shrink-0">
                       <img src={project.image} alt={project.title} />
                     </div>
                     <div className="flex flex-wrap justify-end gap-1.5">
@@ -625,7 +626,7 @@ function Projects() {
                     </div>
                   </div>
 
-                  <h3 className="text-stone-200 text-lg font-semibold mb-2 group-hover:text-purple-400 transition-colors">
+                  <h3 className="text-base sm:text-lg text-stone-200 font-semibold mb-2 group-hover:text-purple-400 transition-colors">
                     {project.title}
                   </h3>
                   <p className="text-stone-400 text-xs leading-relaxed mb-6 line-clamp-3">
@@ -691,7 +692,7 @@ function Projects() {
         </div>
 
         {projects.length > 4 && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-10 md:mt-12 flex justify-center">
             <button
               onClick={() => setShowAll(!showAll)}
               className="px-6 py-2 rounded-full border border-purple-500/50 text-purple-400 text-sm font-medium hover:bg-purple-500/10 transition-all active:scale-95"
@@ -875,8 +876,8 @@ function Skills() {
 
   return (
     <Section id="skills">
-      <div className="flex flex-col items-center mb-10">
-        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+      <div className="flex flex-col items-center mb-8 md:mb-10">
+        <h2 className="text-stone-200 text-3xl sm:text-4xl font-bold tracking-tight">
           Skills
         </h2>
       </div>
@@ -901,7 +902,7 @@ function Skills() {
         .gx-star { animation: gx-twinkle 4s ease-in-out infinite; }
       `}</style>
 
-      <div className="relative max-w-4xl mx-auto -mt-6">
+      <div className="relative max-w-4xl mx-auto -mt-4 md:-mt-6">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute -top-24 -left-24 w-96 h-96 rounded-full bg-purple-500/10 blur-3xl" />
           <div className="absolute bottom-0 right-0 w-[28rem] h-[28rem] rounded-full bg-pink-500/10 blur-3xl" />
@@ -975,7 +976,7 @@ function Skills() {
             return (
               <div
                 key={cluster.id}
-                className="absolute flex items-center gap-1.5 px-3 py-1.5 rounded-full border backdrop-blur-sm transition-all duration-500 ease-out"
+                className="absolute flex items-center gap-1.5 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full border backdrop-blur-sm transition-all duration-500 ease-out"
                 style={{
                   left: `${(cluster.hub.x / 700) * 100}%`,
                   top: `${(cluster.hub.y / 460) * 100}%`,
@@ -987,7 +988,7 @@ function Skills() {
                 }}
               >
                 <span className="w-1.5 h-1.5 rounded-full" style={{ background: cluster.color, boxShadow: `0 0 8px ${cluster.color}` }} />
-                <span className="text-[11px] font-mono tracking-wide text-stone-100 whitespace-nowrap">
+                <span className="text-[9px] sm:text-[11px] font-mono tracking-wide text-stone-100 whitespace-nowrap">
                   {cluster.label}
                 </span>
               </div>
@@ -1010,7 +1011,7 @@ function Skills() {
                   }}
                 >
                   <div
-                    className="flex items-center justify-center rounded-full bg-stone-900 border w-10 h-10 transition-transform duration-300 group-hover:scale-125 cursor-default"
+                    className="flex items-center justify-center rounded-full bg-stone-900 border w-8 h-8 sm:w-10 sm:h-10 transition-transform duration-300 group-hover:scale-125 cursor-default"
                     style={{
                       borderColor: `${cluster.color}66`,
                       ["--gx-glow"]: cluster.glow,
@@ -1170,22 +1171,22 @@ function Contact() {
 
   return (
     <Section id="contact">
-      <div className="flex flex-col items-center mb-10">
-        <h2 className="text-stone-200 text-4xl font-bold tracking-tight">
+      <div className="flex flex-col items-center mb-8 md:mb-10">
+        <h2 className="text-stone-200 text-3xl sm:text-4xl font-bold tracking-tight">
           Get In Touch
         </h2>
       </div>
 
-      <p className="text-center text-stone-500 text-sm tracking-widest mb-12">
+      <p className="text-center text-stone-500 text-xs sm:text-sm tracking-widest mb-10 md:mb-12 px-4">
         Want to know more about me?
       </p>
 
-      <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+      <div className="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
 
         <SpotlightCard>
-          <GlassCard className="p-8 h-full flex flex-col">
+          <GlassCard className="p-6 sm:p-8 h-full flex flex-col">
 
-            <h3 className="text-2xl font-bold text-stone-100 mb-3">
+            <h3 className="text-xl sm:text-2xl font-bold text-stone-100 mb-3">
               Let's build something great
             </h3>
 
@@ -1199,10 +1200,10 @@ function Contact() {
               {/* Email */}
               <a
                 href={`mailto:${CONTACT_EMAIL}`}
-                className="flex items-center gap-3 text-stone-300 hover:text-purple-400 transition text-sm"
+                className="flex items-center gap-3 text-stone-300 hover:text-purple-400 transition text-xs sm:text-sm break-all"
               >
                 <span
-                  className="flex items-center justify-center w-9 h-9
+                  className="flex items-center justify-center w-9 h-9 shrink-0
                              rounded-lg bg-white/[0.05] border border-white/10"
                 >
                   <FaEnvelope size={15} />
@@ -1212,7 +1213,7 @@ function Contact() {
               </a>
 
               {/* Social Links */}
-              <div className="flex items-center justify-center gap-10 pt-2">
+              <div className="flex items-center justify-center gap-6 sm:gap-10 pt-2">
 
                 <ContactLink
                   href="https://github.com/misu05-dev"
@@ -1238,7 +1239,7 @@ function Contact() {
         </SpotlightCard>
 
         <SpotlightCard>
-          <GlassCard className="p-8 h-full">
+          <GlassCard className="p-6 sm:p-8 h-full">
 
             <form
               onSubmit={handleSubmit}
@@ -1374,8 +1375,8 @@ const ContactLink = ({ href, icon, label }) => (
 
 function Footer() {
   return (
-    <footer className="py-6 border-t border-white/5 text-center">
-      <p className="text-zinc-600 text-sm font-mono ">
+    <footer className="py-6 border-t border-white/5 text-center px-4">
+      <p className="text-zinc-600 text-xs sm:text-sm font-mono ">
         © {new Date().getFullYear()} — Crafted by Su
       </p>
     </footer>
@@ -1454,7 +1455,7 @@ function CustomCursor() {
 
 export default function App() {
   return (
-    <div className="bg-black min-h-screen font-sans scroll-smooth">
+    <div className="bg-black min-h-screen font-sans scroll-smooth overflow-x-hidden">
       {/* <div className="bg-black min-h-screen font-sans scroll-smooth cursor-none md:cursor-none"> */}
       {/* <CustomCursor /> */}
       <Navbar />

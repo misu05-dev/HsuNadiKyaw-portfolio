@@ -1,9 +1,57 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+/**
+ * Responsive font size: pass either a single number (fontSize) to keep the
+ * old fixed behavior, or nothing and let it pick based on viewport width.
+ * You can also pass `fontSizes` to customize the breakpoints, e.g.:
+ *   fontSizes={{ base: 34, sm: 44, md: 60 }}
+ */
+function useResponsiveFontSize(fontSize, fontSizes) {
+    const sizes = {
+        base: fontSizes?.base ?? 36,
+        sm: fontSizes?.sm ?? 46,
+        md: fontSizes?.md ?? 60,
+    };
+
+    const getSize = () => {
+        if (fontSize != null) return fontSize; // explicit override wins
+        if (typeof window === "undefined") return sizes.md;
+        const w = window.innerWidth;
+        if (w < 480) return sizes.base;
+        if (w < 768) return sizes.sm;
+        return sizes.md;
+    };
+
+    const [size, setSize] = useState(getSize);
+
+    useEffect(() => {
+        if (fontSize != null) {
+            setSize(fontSize);
+            return;
+        }
+
+        let frame;
+        const onResize = () => {
+            cancelAnimationFrame(frame);
+            frame = requestAnimationFrame(() => setSize(getSize()));
+        };
+
+        window.addEventListener("resize", onResize);
+        return () => {
+            window.removeEventListener("resize", onResize);
+            cancelAnimationFrame(frame);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [fontSize, fontSizes?.base, fontSizes?.sm, fontSizes?.md]);
+
+    return size;
+}
 
 function ParticleText({
     text = "Hsu Nadi Kyaw",
     className = "",
-    fontSize = 60,
+    fontSize = null, // leave null to auto-scale by viewport; pass a number to force a fixed size
+    fontSizes, // optional { base, sm, md } breakpoint overrides
     particleColor = "#6930a1",
     particleGap = 1,
     hoverRadius = 60,
@@ -14,12 +62,14 @@ function ParticleText({
     const mouseRef = useRef({ x: -9999, y: -9999 });
     const particlesRef = useRef([]);
 
+    const activeFontSize = useResponsiveFontSize(fontSize, fontSizes);
+
     useEffect(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
 
         // Measure text width first
-        ctx.font = `bold ${fontSize}px sans-serif`;
+        ctx.font = `bold ${activeFontSize}px sans-serif`;
         const metrics = ctx.measureText(text);
         const textWidth = Math.ceil(metrics.width) + 20; // buffer so descenders/edges aren't clipped
 
@@ -31,7 +81,7 @@ function ParticleText({
         const height = canvas.height;
 
         ctx.clearRect(0, 0, width, height);
-        ctx.font = `bold ${fontSize}px sans-serif`;
+        ctx.font = `bold ${activeFontSize}px sans-serif`;
         ctx.textAlign = "left";
         ctx.textBaseline = "middle";
         ctx.fillStyle = "#fff";
@@ -119,7 +169,7 @@ function ParticleText({
             cancelAnimationFrame(frame);
             observer.disconnect();
         };
-    }, [text, fontSize, particleColor, particleGap, hoverRadius, repelStrength, canvasHeight]);
+    }, [text, activeFontSize, particleColor, particleGap, hoverRadius, repelStrength, canvasHeight]);
 
     function handleMouseMove(e) {
         const rect = canvasRef.current.getBoundingClientRect();
@@ -141,6 +191,7 @@ function ParticleText({
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             className={className}
+            style={{ maxWidth: "100%", height: "auto" }}
         />
     );
 }
