@@ -173,7 +173,7 @@ function Intro() {
 
         <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 px-4">
           <a
-            href="https://drive.google.com/file/d/1_CJlfbBoIb-TIMc5IdsQDDl3UuOPg9br/view"
+            href="https://drive.google.com/file/d/1bwoqPLP9ueDWLKFQVrDDsviKAZ4ucEkg/view"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto"
