@@ -178,7 +178,7 @@ function Intro() {
             rel="noopener noreferrer"
             className="w-full sm:w-auto"
           >
-            <button className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 rounded-full text-stone-200 hover:scale-105 transition">
+            <button className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 rounded-full text-stone-200 hover:scale-105 transition cursor-pointer">
               Resume
             </button>
           </a>
@@ -189,7 +189,7 @@ function Intro() {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-600 hover:text-stone-200 transition"
+            className="w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-600 hover:text-stone-200 transition cursor-pointer"
           >
             Get in Touch
           </button>
@@ -283,7 +283,7 @@ function About() {
                 {/* Bottom label */}
                 <div className="absolute bottom-5 left-5 right-5">
                   <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-stone-500">
-                    Full-Stack Developer
+                    Hsu - Full-Stack Developer
                   </span>
                 </div>
               </div>
@@ -647,16 +647,16 @@ function Projects() {
                   )} */}
 
                   {project.type === "mobile" ? (
-                    <div className="flex items-center gap-3 ml-auto">
+                    <div className="flex items-center gap-1.5 ml-auto">
                       {project.playStore && (
                         <a
                           href={project.playStore}
                           target="_blank"
                           rel="noopener noreferrer"
                           title="Get it on Google Play"
-                          className="text-stone-400 hover:text-purple-400 transition-colors"
+                          className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 bg-white/[0.03] border border-white/[0.06] rounded hover:border-green-500/50 transition-colors cursor-pointer"
                         >
-                          <FaGooglePlay size={16} />
+                          <FaGooglePlay size={14} className="text-[#3DDC84]" />
                         </a>
                       )}
                       {project.appStore ? (
@@ -665,13 +665,16 @@ function Projects() {
                           target="_blank"
                           rel="noopener noreferrer"
                           title="Get it on the App Store"
-                          className="text-stone-400 hover:text-purple-400 transition-colors"
+                          className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 bg-white/[0.03] border border-white/[0.06] rounded hover:border-blue-500/50 transition-colors cursor-pointer"
                         >
-                          <FaAppStoreIos size={17} />
+                          <FaAppStoreIos size={15} className="text-[#0D96F6]" />
                         </a>
                       ) : (
-                        <span title="Not on the App Store" className="text-stone-700">
-                          <FaAppStoreIos size={17} />
+                        <span
+                          title="Not on the App Store"
+                          className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 bg-white/[0.03] border border-white/[0.06] rounded"
+                        >
+                          <FaAppStoreIos size={15} className="text-stone-700" />
                         </span>
                       )}
                     </div>
@@ -680,9 +683,10 @@ function Projects() {
                       href={project.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-[11px] font-bold text-purple-400 hover:text-purple-200 transition-colors group/link ml-auto"
+                      title="Visit live site"
+                      className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 bg-white/[0.03] border border-white/[0.06] rounded hover:border-sky-500/50 transition-colors group/link ml-auto cursor-pointer"
                     >
-                      <FaGlobe size={13} />
+                      <FaGlobe size={13} className="text-sky-400" />
                     </a>
                   )}
                 </div>
@@ -695,7 +699,7 @@ function Projects() {
           <div className="mt-10 md:mt-12 flex justify-center">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="px-6 py-2 rounded-full border border-purple-500/50 text-purple-400 text-sm font-medium hover:bg-purple-500/10 transition-all active:scale-95"
+              className="px-6 py-2 rounded-full border border-purple-500/50 text-purple-400 text-sm font-medium hover:bg-purple-500/10 transition-all active:scale-95 cursor-pointer"
             >
               {showAll ? "Show Less" : "View All Projects"}
             </button>
@@ -1298,6 +1302,7 @@ function Contact() {
                   transition
                   disabled:opacity-60
                   disabled:hover:scale-100
+                  cursor-pointer
                 "
               >
                 {status === "sending" ? (
