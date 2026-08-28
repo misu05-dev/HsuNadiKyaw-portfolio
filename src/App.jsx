@@ -173,7 +173,7 @@ function Intro() {
 
         <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 px-4">
           <a
-            href="https://drive.google.com/file/d/1yopEApiRzSqQEqFvD0WZc3cmWHzuyIm5/view"
+            href="https://drive.google.com/file/d/1_CJlfbBoIb-TIMc5IdsQDDl3UuOPg9br/view"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto"
@@ -333,19 +333,19 @@ function About() {
 // Expanded data structure with multiple roles and richer detail
 const experiences = [
   {
-    year: "2024 — Present",
-    duration: "2024 — August",
+    year: "March 2024 — August 2026",
+    duration: "March 2024 — August 2026",
     title: "Full-Stack Web Developer",
     company: "Ophir IT Solutions",
     type: "Full-time",
     location: "On-site / Hybrid",
-    desc: "Architecting high-performance landing pages, dynamic dashboards, and full-stack web applications. Driving frontend performance optimization, API integration, and user-centric interface design.",
+    desc: "Architecting high-performance landing pages, dynamic dashboards, and full-stack web applications.  Developing responsive and user-friendly web applications with a focus on frontend performance, API integration, and seamless user experiences.",
     points: [
       "Engineered scalable web applications using React, Vue.js, PHP, and Laravel, improving overall load efficiency and code maintainability.",
       "Designed and integrated robust RESTful APIs to ensure seamless frontend-backend data binding and dynamic state management.",
       "Developed complex, data-driven dashboards and admin management panels with real-time analytics and dynamic reporting views.",
       "Collaborated closely with cross-functional teams to translate UI/UX wireframes into responsive, pixel-perfect digital experiences.",
-      "Implemented security best practices, form validation, and optimized client-side rendering for improved SEO and UX scores.",
+      "Implemented security best practices and form validation while optimizing frontend performance to improve application speed and user experience.",
     ],
     skills: ["React", "Vue.js", "Laravel", "PHP", "Tailwind CSS", "REST APIs", "Vite", "MySQL"],
   },
