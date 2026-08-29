@@ -394,7 +394,7 @@ export function Experience() {
           </div>
 
           {/* Right Column: Experience Cards */}
-          <div className="lg:col-span-8 space-y-8">
+          <div className="lg:col-span-8 space-y-8 ">
             {experiences.map((job, index) => (
               <div
                 key={index}
@@ -1460,7 +1460,7 @@ function CustomCursor() {
 
 export default function App() {
   return (
-    <div className="bg-black min-h-screen font-sans scroll-smooth overflow-x-hidden">
+    <div className="bg-black min-h-screen font-sans scroll-smooth">
       {/* <div className="bg-black min-h-screen font-sans scroll-smooth cursor-none md:cursor-none"> */}
       {/* <CustomCursor /> */}
       <Navbar />
