@@ -172,7 +172,7 @@ function Intro() {
         </p>
 
         <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8 px-4">
-          <a
+          {/* <a
             href="https://drive.google.com/file/d/1bwoqPLP9ueDWLKFQVrDDsviKAZ4ucEkg/view"
             target="_blank"
             rel="noopener noreferrer"
@@ -181,7 +181,7 @@ function Intro() {
             <button className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 rounded-full text-stone-200 hover:scale-105 transition cursor-pointer">
               Resume
             </button>
-          </a>
+          </a> */}
 
           <button
             onClick={() => {
@@ -189,7 +189,7 @@ function Intro() {
                 .getElementById("contact")
                 ?.scrollIntoView({ behavior: "smooth" });
             }}
-            className="w-full sm:w-auto px-6 py-3 border border-purple-500 text-purple-400 rounded-full hover:bg-purple-600 hover:text-stone-200 transition cursor-pointer"
+            className="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-purple-700 to-purple-900 rounded-full text-stone-200 hover:scale-105 transition cursor-pointer"
           >
             Get in Touch
           </button>
@@ -333,8 +333,8 @@ function About() {
 // Expanded data structure with multiple roles and richer detail
 const experiences = [
   {
-    year: "March 2024 — August 2026",
-    duration: "March 2024 — August 2026",
+    year: "Dec 2024 — Sept 2026",
+    duration: "Dec 2024 — Sept 2026",
     title: "Full-Stack Web Developer",
     company: "Ophir IT Solutions",
     type: "Full-time",
@@ -345,9 +345,9 @@ const experiences = [
       "Designed and integrated robust RESTful APIs to ensure seamless frontend-backend data binding and dynamic state management.",
       "Developed complex, data-driven dashboards and admin management panels with real-time analytics and dynamic reporting views.",
       "Collaborated closely with cross-functional teams to translate UI/UX wireframes into responsive, pixel-perfect digital experiences.",
-      "Implemented security best practices and form validation while optimizing frontend performance to improve application speed and user experience.",
+      "Implemented security best practices and form validation while optimizing frontend performance to improve applicatio  n speed and user experience.",
     ],
-    skills: ["React", "Vue.js", "Laravel", "PHP", "Tailwind CSS", "REST APIs", "Vite", "MySQL"],
+    skills: ["React", "Vue.js", "Laravel", "PHP", "Tailwind CSS", "REST APIs", "Vite", "MySQL", "PostgreSQL", "Inertia.js"],
   },
 ];
 
